@@ -1,0 +1,51 @@
+{
+  "episode": 1,
+  "mission": 1,
+  "waves": [
+	{
+		"name": "Wave1",
+		"enemies": [
+			{
+				"type": "E1",
+				"x": 200,
+				"y": -50,
+				"speed": 4,
+				"health": 100
+			},
+			{
+				"type": "E1",
+				"x": 1200,
+				"y": -50,
+				"speed": 4,
+				"health": 100
+			}
+		]
+	},
+	{
+		"name": "Wave2",
+		"enemies": [
+			{
+				"type": "E1",
+				"x": 100,
+				"y": -1000,
+				"speed": 4,
+				"health": 100
+			},
+			{
+				"type": "E1",
+				"x": 600,
+				"y": -1000,
+				"speed": 4,
+				"health": 100
+			}, 
+			{
+				"type": "E1",
+				"x": 1100,
+				"y": -1000,
+				"speed": 4,
+				"health": 100
+			}
+		]
+	}
+  ]
+}
