@@ -3,16 +3,30 @@ import arcade
 from settings import SCALING
 
 
-class Aircraft:
-    def __init__(self, x: int, y: int, altitude: int, speed: int, heading, sprite_img: str, health: int):
-        self.sprite = arcade.Sprite(sprite_img, SCALING)
-
-        self.sprite.left = x
-        self.sprite.center_y = y
-        self.sprite.angle = heading
+class Aircraft(arcade.Sprite):
+    def __init__(self, x: int, y: int, altitude: int, velocity: tuple, angle: float, sprite_img: str, health: int):
+        super().__init__(sprite_img, SCALING)
+        self.left = x
+        self.center_y = y
+        self.velocity = velocity
+        self.angle = angle
         self.altitude = altitude
-        self.speed = speed
         self.health = health
 
-    def draw(self):
-        self.sprite.draw()
+    def update(self):
+        super().update()
+
+        if self.top < 0:
+            self.remove_from_sprite_lists()
+
+    def get_position(self) -> tuple:
+        return self.position
+
+    def get_velocity(self):
+        return self.velocity
+
+    def get_altitude(self):
+        return self.altitude
+
+    def get_health(self):
+        return self.health

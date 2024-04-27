@@ -1,6 +1,15 @@
-SCREEN_WIDTH = 1280
-SCREEN_HEIGHT = 800
+"""
+Screen resolutions:
+- 800 x 600
+- 1024 x 768
+- 1280 x 720
+- 1366 x 768
+- 1600 x 900
+- 1920 x 1080
+"""
+SCREEN_RES = [1600, 900]
 SCREEN_TITLE = 'Raptor'
+RESIZABLE = True
 
 COLORS = {
     'BLACK': [0, 0, 0],
@@ -23,12 +32,17 @@ COLORS = {
 
 AIRCRAFT_DIAMETER = 72
 
+# Raptor settings
+
 RAPTOR_ALTITUDE = 100
-RAPTOR_SPEED = 5
+RAPTOR_VELOCITY = (0, 0)
 RAPTOR_HEALTH = 1000
 RAPTOR_SHIELD = 500
 
-SCALING = 0.1
+# Enemy settings
+ENEMY_VELOCITY = (0, -3)
+
+SCALING = 0.15
 
 BG_IMAGES = {
     'bg_space1': 'assets/images/background/bg_space1.png',

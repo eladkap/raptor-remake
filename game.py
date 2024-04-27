@@ -2,6 +2,7 @@ import random
 
 import arcade
 
+from aircraft import Aircraft
 from raptor import Raptor
 from settings import *
 
@@ -24,31 +25,48 @@ class Game(arcade.Window):
         self.all_sprites = arcade.SpriteList()
         self.setup()
 
+    # Setup functions #
+
     def setup(self):
         arcade.set_background_color(COLORS['BLACK_LIGHT'])
-
         self.set_raptor()
-        self.all_sprites.append(self.raptor.sprite)
-
-        arcade.schedule(self.create_enemy, 5)
+        self.set_enemies()
 
     def set_raptor(self):
         self.raptor = Raptor(self.width / 2,
                              AIRCRAFT_DIAMETER,
                              RAPTOR_ALTITUDE,
-                             RAPTOR_SPEED,
+                             RAPTOR_VELOCITY,
                              0,
                              SPRITES['raptor'],
                              RAPTOR_HEALTH,
                              RAPTOR_SHIELD)
-        print(f'Raptor dimensions: {self.raptor.sprite.width}x{self.raptor.sprite.height}')
+        self.all_sprites.append(self.raptor)
+        print(f'Raptor dimensions: {self.raptor.width}x{self.raptor.height}')
+
+    def set_enemies(self):
+        arcade.schedule(self.create_enemy, 3)
+
+    # Draw functions #
+
+    def draw_elements(self):
+        self.all_sprites.draw()
+        # for element in self.all_sprites:
+        #     element.draw()
 
     def on_draw(self):
         arcade.start_render()
-        self.raptor.draw()
+        self.draw_elements()
+
+    # Update functions #
+
+    def update_elements(self):
+        self.all_sprites.update()
+        # for enemy in self.enemies:
+        #     enemy.update()
 
     def on_update(self, delta_time: float):
-        pass
+        self.update_elements()
 
     # Game events
 
@@ -61,6 +79,19 @@ class Game(arcade.Window):
     # Game top-level functions
 
     def create_enemy(self, delta_time: float):
-        enemy = arcade.Sprite(SPRITES['enemy1'], SCALING)
-        enemy.left = random.randint(AIRCRAFT_DIAMETER, self.width - AIRCRAFT_DIAMETER)
-        enemy.top = 0
+        x = random.randint(AIRCRAFT_DIAMETER, self.width - AIRCRAFT_DIAMETER)
+        y = self.height + AIRCRAFT_DIAMETER
+        altitude = 1000
+        velocity = ENEMY_VELOCITY
+        heading = 0
+        sprite_img = SPRITES['enemy1']
+        health = 200
+
+        enemy = Aircraft(x, y, altitude, velocity, heading, sprite_img, health)
+
+        self.enemies.append(enemy)
+        self.all_sprites.append(enemy)
+
+        # enemy = arcade.Sprite(SPRITES['enemy1'], SCALING)
+        # enemy.left = random.randint(AIRCRAFT_DIAMETER, self.width - AIRCRAFT_DIAMETER)
+        # enemy.top = 0
