@@ -21,10 +21,26 @@ COLORS = {
     'DARK_BLUE': [0, 0, 64]
 }
 
-RADIUS = 20
+AIRCRAFT_DIAMETER = 72
 
-SCALING = 2
+RAPTOR_ALTITUDE = 100
+RAPTOR_SPEED = 5
+RAPTOR_HEALTH = 1000
+RAPTOR_SHIELD = 500
+
+SCALING = 0.1
+
+BG_IMAGES = {
+    'bg_space1': 'assets/images/background/bg_space1.png',
+    'bg_space2': 'assets/images/background/bg_space2.png',
+    'bg_space3': 'assets/images/background/bg_space3.png'
+}
 
 SPRITES = {
-    'raptor': 'assets/images/sprites/raptor/raptor.png'
+    'raptor': 'assets/images/sprites/raptor/raptor.png',
+    'asteroid': 'assets/images/sprites/enemies/asteroid.png',
+    'enemy1': 'assets/images/sprites/enemies/enemy_1.png',
+    'enemy2': 'assets/images/sprites/enemies/enemy_2.png',
+    'enemy3': 'assets/images/sprites/enemies/enemy_3.png',
+    'enemy4': 'assets/images/sprites/enemies/enemy_4.png'
 }
