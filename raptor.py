@@ -1,4 +1,6 @@
 from aircraft import Aircraft
+from beam import Beam
+from settings import SPRITES, WEAPON_DAMAGE, WEAPON_VELOCITY
 
 
 class Raptor(Aircraft):

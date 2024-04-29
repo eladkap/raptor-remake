@@ -4,10 +4,10 @@ Screen resolutions:
 - 1024 x 768
 - 1280 x 720
 - 1366 x 768
-- 1600 x 900
+- 1600 x 900 *
 - 1920 x 1080
 """
-SCREEN_RES = [1600, 900]
+SCREEN_RES = [1280, 720]
 SCREEN_TITLE = 'Raptor'
 RESIZABLE = True
 
@@ -57,5 +57,19 @@ SPRITES = {
     'enemy1': 'assets/images/sprites/enemies/enemy_1.png',
     'enemy2': 'assets/images/sprites/enemies/enemy_2.png',
     'enemy3': 'assets/images/sprites/enemies/enemy_3.png',
-    'enemy4': 'assets/images/sprites/enemies/enemy_4.png'
+    'enemy4': 'assets/images/sprites/enemies/enemy_4.png',
+    'blue_beam': 'assets/images/sprites/weapon/blue_beam.png'
+}
+
+# Weapon settings
+WEAPON_DAMAGE = {
+    'blue_beam': 5,
+    'red_beam': 8,
+    'green_beam': 10
+}
+
+WEAPON_VELOCITY = {
+    'blue_beam': [0, 10],
+    'red_beam': [0, 12],
+    'green_beam': [0, 14]
 }

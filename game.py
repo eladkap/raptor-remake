@@ -1,9 +1,9 @@
 import random
-import sys
 
 import arcade
 
 from aircraft import Aircraft
+from beam import Beam
 from raptor import Raptor
 from settings import *
 
@@ -25,6 +25,7 @@ class Game(arcade.Window):
 
         # setup game elements
         self.enemies = arcade.SpriteList()
+        self.beams = arcade.SpriteList()
         self.all_sprites = arcade.SpriteList()
         self.setup()
 
@@ -55,11 +56,11 @@ class Game(arcade.Window):
         y = self.height + AIRCRAFT_DIAMETER
         altitude = 1000
         velocity = ENEMY_VELOCITY
-        heading = 0
+        angle = 0
         sprite_img = SPRITES['enemy1']
         health = 200
 
-        enemy = Aircraft(x, y, altitude, velocity, heading, sprite_img, health)
+        enemy = Aircraft(x, y, altitude, velocity, angle, sprite_img, health)
 
         self.enemies.append(enemy)
         self.all_sprites.append(enemy)
@@ -90,13 +91,35 @@ class Game(arcade.Window):
         if self.raptor.bottom < 0:
             self.raptor.bottom = 0
 
+    def busted(self):
+        pass
+
+    def check_collision(self):
+        if self.raptor.collides_with_list(self.enemies):
+            self.busted()
+
     def on_update(self, delta_time: float):
         if self.paused:
             return
 
+        self.check_collision()
         self.update_elements()
-
         self.check_raptor_bounds()
+
+    # Handle weapons
+
+    def shoot_beam(self, aircraft: Aircraft):
+        x = aircraft.left + aircraft.width / 2
+        y = aircraft.center_y + aircraft.height / 2
+        velocity = WEAPON_VELOCITY['blue_beam']
+        angle = aircraft.angle
+        damage = WEAPON_DAMAGE['blue_beam']
+        sprite_img = SPRITES['blue_beam']
+
+        beam = Beam(x, y, velocity, angle, damage, sprite_img)
+
+        self.beams.append(beam)
+        self.all_sprites.append(beam)
 
     # Game events
 
@@ -119,6 +142,8 @@ class Game(arcade.Window):
             self.raptor.change_x = -RAPTOR_MOVEMENT
         if symbol == arcade.key.RIGHT:
             self.raptor.change_x = RAPTOR_MOVEMENT
+        if symbol == arcade.key.SPACE:
+            self.shoot_beam(self.raptor)
 
     def on_key_release(self, symbol: int, modifiers: int):
         if symbol == arcade.key.LEFT or symbol == arcade.key.RIGHT:

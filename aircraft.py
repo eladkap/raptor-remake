@@ -4,8 +4,10 @@ from settings import SCALING
 
 
 class Aircraft(arcade.Sprite):
-    def __init__(self, x: int, y: int, altitude: int, velocity: list, angle: float, sprite_img: str, health: int):
+    def __init__(self, x: float, y: float, altitude: int, velocity: list, angle: float, sprite_img: str, health: int):
         super().__init__(sprite_img, SCALING)
+        self.x = x
+        self.y = y
         self.left = x
         self.center_y = y
         self.velocity = velocity
