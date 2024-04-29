@@ -4,7 +4,7 @@ from settings import SCALING
 
 
 class Beam(arcade.Sprite):
-    def __init__(self, x: int, y: int, velocity: list, angle: float, damage: float, sprite_img: str):
+    def __init__(self, x: float, y: float, velocity: list, angle: float, damage: float, sprite_img: str):
         super().__init__(sprite_img, SCALING)
         self.x = x
         self.y = y

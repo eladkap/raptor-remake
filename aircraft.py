@@ -38,3 +38,6 @@ class Aircraft(arcade.Sprite):
         self.change_y = vy
         # self.force = (vx, vy)
         # self.forward()
+
+    def decrease_health(self, points: int):
+        self.health -= points

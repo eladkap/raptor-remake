@@ -4,6 +4,7 @@ import arcade
 
 from aircraft import Aircraft
 from beam import Beam
+from enemy import Enemy
 from raptor import Raptor
 from settings import *
 
@@ -55,10 +56,10 @@ class Game(arcade.Window):
         x = random.randint(AIRCRAFT_DIAMETER, self.width - AIRCRAFT_DIAMETER)
         y = self.height + AIRCRAFT_DIAMETER
         altitude = 1000
-        velocity = ENEMY_VELOCITY
+        velocity = ENEMY_VELOCITY['enemy1']
         angle = 0
         sprite_img = SPRITES['enemy1']
-        health = 200
+        health = ENEMY_HEALTH['enemy1']
 
         enemy = Aircraft(x, y, altitude, velocity, angle, sprite_img, health)
 
@@ -92,17 +93,38 @@ class Game(arcade.Window):
             self.raptor.bottom = 0
 
     def busted(self):
-        pass
+        print('Busted')
 
-    def check_collision(self):
-        if self.raptor.collides_with_list(self.enemies):
-            self.busted()
+    def destroy_aircraft(self, aircraft):
+        aircraft.remove_from_sprite_lists()
+
+    def hit_enemy(self, beam, enemy):
+        beam.remove_from_sprite_lists()
+        enemy.decrease_health(beam.damage)
+        if enemy.health <= 0:
+            self.destroy_aircraft(enemy)
+
+    def check_raptor_collision_with_enemies(self):
+        for enemy in self.enemies:
+            if self.raptor.collides_with_sprite(enemy):
+                self.destroy_enemy(enemy)
+                self.raptor.decrease_health(RAPTOR_COLLISION_POINTS)
+                if self.raptor.health <= 0:
+                    self.busted()
+
+    def check_beam_collision_with_enemies(self):
+        for beam in self.beams:
+            for enemy in self.enemies:
+                if beam.collides_with_sprite(enemy):
+                    self.hit_enemy(beam, enemy)
 
     def on_update(self, delta_time: float):
         if self.paused:
             return
 
-        self.check_collision()
+        self.check_raptor_collision_with_enemies()
+        self.check_beam_collision_with_enemies()
+
         self.update_elements()
         self.check_raptor_bounds()
 
@@ -151,5 +173,3 @@ class Game(arcade.Window):
 
         if symbol == arcade.key.UP or symbol == arcade.key.DOWN:
             self.raptor.change_y = 0
-
-    # Game top-level functions

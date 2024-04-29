@@ -33,15 +33,26 @@ COLORS = {
 AIRCRAFT_DIAMETER = 72
 
 # Raptor settings
-
 RAPTOR_ALTITUDE = 100
 RAPTOR_VELOCITY = [0, 0]
 RAPTOR_HEALTH = 1000
 RAPTOR_SHIELD = 500
 RAPTOR_MOVEMENT = 5
 
+RAPTOR_COLLISION_POINTS = 200
+
 # Enemy settings
-ENEMY_VELOCITY = [0, -3]
+ENEMY_VELOCITY = {
+    'enemy1': [0, -3],
+    'enemy2': [0, -4],
+    'enemy3': [0, -5]
+}
+
+ENEMY_HEALTH = {
+    'enemy1': 100,
+    'enemy2': 200,
+    'enemy3': 300
+}
 
 SCALING = 0.15
 
@@ -63,9 +74,9 @@ SPRITES = {
 
 # Weapon settings
 WEAPON_DAMAGE = {
-    'blue_beam': 5,
-    'red_beam': 8,
-    'green_beam': 10
+    'blue_beam': 50,
+    'red_beam': 80,
+    'green_beam': 100
 }
 
 WEAPON_VELOCITY = {
