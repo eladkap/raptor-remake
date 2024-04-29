@@ -1,4 +1,5 @@
 import random
+import sys
 
 import arcade
 
@@ -19,6 +20,8 @@ class Game(arcade.Window):
         self.width = width
         self.height = height
         self.title = title
+
+        self.paused = False
 
         # setup game elements
         self.enemies = arcade.SpriteList()
@@ -47,6 +50,20 @@ class Game(arcade.Window):
     def set_enemies(self):
         arcade.schedule(self.create_enemy, 3)
 
+    def create_enemy(self, delta_time: float):
+        x = random.randint(AIRCRAFT_DIAMETER, self.width - AIRCRAFT_DIAMETER)
+        y = self.height + AIRCRAFT_DIAMETER
+        altitude = 1000
+        velocity = ENEMY_VELOCITY
+        heading = 0
+        sprite_img = SPRITES['enemy1']
+        health = 200
+
+        enemy = Aircraft(x, y, altitude, velocity, heading, sprite_img, health)
+
+        self.enemies.append(enemy)
+        self.all_sprites.append(enemy)
+
     # Draw functions #
 
     def draw_elements(self):
@@ -62,36 +79,37 @@ class Game(arcade.Window):
 
     def update_elements(self):
         self.all_sprites.update()
-        # for enemy in self.enemies:
-        #     enemy.update()
 
     def on_update(self, delta_time: float):
         self.update_elements()
 
     # Game events
 
+    def quit(self):
+        arcade.close_window()
+
+    def pause_resume(self):
+        self.paused = not self.paused
+
     def on_key_press(self, symbol: int, modifiers: int):
-        print(f'Key {symbol} is pressed')
+        if symbol == arcade.key.Q:
+            self.quit()
+        if symbol == arcade.key.P:
+            self.pause_resume()
+        if symbol == arcade.key.UP:
+            self.raptor.change_y = RAPTOR_MOVEMENT
+        if symbol == arcade.key.DOWN:
+            self.raptor.change_y = -RAPTOR_MOVEMENT
+        if symbol == arcade.key.LEFT:
+            self.raptor.change_x = -RAPTOR_MOVEMENT
+        if symbol == arcade.key.RIGHT:
+            self.raptor.change_x = RAPTOR_MOVEMENT
 
     def on_key_release(self, symbol: int, modifiers: int):
-        print(f'key {symbol} released')
+        if symbol == arcade.key.LEFT or symbol == arcade.key.RIGHT:
+            self.raptor.change_x = 0
+
+        if symbol == arcade.key.UP or symbol == arcade.key.DOWN:
+            self.raptor.change_y = 0
 
     # Game top-level functions
-
-    def create_enemy(self, delta_time: float):
-        x = random.randint(AIRCRAFT_DIAMETER, self.width - AIRCRAFT_DIAMETER)
-        y = self.height + AIRCRAFT_DIAMETER
-        altitude = 1000
-        velocity = ENEMY_VELOCITY
-        heading = 0
-        sprite_img = SPRITES['enemy1']
-        health = 200
-
-        enemy = Aircraft(x, y, altitude, velocity, heading, sprite_img, health)
-
-        self.enemies.append(enemy)
-        self.all_sprites.append(enemy)
-
-        # enemy = arcade.Sprite(SPRITES['enemy1'], SCALING)
-        # enemy.left = random.randint(AIRCRAFT_DIAMETER, self.width - AIRCRAFT_DIAMETER)
-        # enemy.top = 0
