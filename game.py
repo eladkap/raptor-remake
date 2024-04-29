@@ -80,8 +80,23 @@ class Game(arcade.Window):
     def update_elements(self):
         self.all_sprites.update()
 
+    def check_raptor_bounds(self):
+        if self.raptor.left < 0:
+            self.raptor.left = 0
+        if self.raptor.right > self.width:
+            self.raptor.right = self.width
+        if self.raptor.top > self.height:
+            self.raptor.top = self.height
+        if self.raptor.bottom < 0:
+            self.raptor.bottom = 0
+
     def on_update(self, delta_time: float):
+        if self.paused:
+            return
+
         self.update_elements()
+
+        self.check_raptor_bounds()
 
     # Game events
 
