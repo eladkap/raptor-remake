@@ -12,7 +12,7 @@ from settings import *
 class Game(arcade.Window):
     def __init__(self, width: int, height: int, title: str):
         """
-        Initilizes game window
+        Initializes game window
         :param width: game window width
         :param height: game window height
         :param title: game title
@@ -25,6 +25,7 @@ class Game(arcade.Window):
         self.paused = False
 
         # setup game elements
+        self.raptor = None
         self.enemies = arcade.SpriteList()
         self.beams = arcade.SpriteList()
         self.all_sprites = arcade.SpriteList()
@@ -104,6 +105,9 @@ class Game(arcade.Window):
         if enemy.health <= 0:
             self.destroy_aircraft(enemy)
 
+    def destroy_enemy(self, enemy):
+        pass
+
     def check_raptor_collision_with_enemies(self):
         for enemy in self.enemies:
             if self.raptor.collides_with_sprite(enemy):
@@ -142,6 +146,7 @@ class Game(arcade.Window):
 
         self.beams.append(beam)
         self.all_sprites.append(beam)
+        print([str(beam) for beam in self.beams])
 
     # Game events
 

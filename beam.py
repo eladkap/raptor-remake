@@ -1,6 +1,6 @@
 import arcade
 
-from settings import SCALING
+from settings import SCALING, SCREEN_RES
 
 
 class Beam(arcade.Sprite):
@@ -14,8 +14,11 @@ class Beam(arcade.Sprite):
         self.angle = angle
         self.damage = damage
 
+    def __str__(self):
+        return f'({self.x},{self.y})'
+
     def update(self):
         super().update()
 
-        if self.top < 0:
+        if self.top < 0 or self.top > SCREEN_RES[1]:
             self.remove_from_sprite_lists()
